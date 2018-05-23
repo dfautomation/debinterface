@@ -82,7 +82,7 @@ class InterfacesReader(object):
 
     def _parse_details(self, line):
         if line[0].isspace() is True:
-            sline = [x.strip() for x in line.split()]
+            sline = [x.strip() for x in line.split(None, 1)]
 
             if sline[0] == 'address':
                 self._adapters[self._context].setAddress(sline[1])
@@ -99,19 +99,16 @@ class InterfacesReader(object):
             elif sline[0] == 'wpa-conf':
                 self._adapters[self._context].setWpaConf(sline[1])
             elif sline[0] == 'dns-nameservers':
-                nameservers = sline
-                del nameservers[0]
+                nameservers = sline[1].split()
                 if len(nameservers) == 1:
                     nameservers = nameservers[0]
                 self._adapters[self._context].setDnsNameservers(nameservers)
             elif sline[0] == 'dns-search':
-                searchUri = sline
-                del searchUri[0]
+                searchUri = sline[1].split()
                 self._adapters[self._context].setDnsSearch(searchUri)
             elif sline[0].startswith('bridge') is True:
                 opt = sline[0].split('_')
-                sline.pop(0)
-                ifs = " ".join(sline)
+                ifs = sline[1]
                 self._adapters[self._context].replaceBropt(opt[1], ifs)
             elif (sline[0] == 'up'
                   or sline[0] == 'down'
@@ -119,8 +116,8 @@ class InterfacesReader(object):
                   or sline[0] == 'pre-down'
                   or sline[0] == 'post-up'
                   or sline[0] == 'post-down'):
-                ud = sline.pop(0)
-                cmd = ' '.join(sline)
+                ud = sline[0]
+                cmd = sline[1]
                 if ud == 'up':
                     self._adapters[self._context].appendUp(cmd)
                 elif ud == 'down':

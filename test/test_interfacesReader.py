@@ -170,3 +170,12 @@ class TestInterfacesReader(unittest.TestCase):
             None
         )
         self.assertEqual(wlan2.attributes['wpa-conf'], '/etc/wpa_supplicant/wpa_supplicant.conf')
+
+    def test_read_unknown_options(self):
+        reader = InterfacesReader(INF_PATH)
+        wlan1 = next(
+            (x for x in reader.parse_interfaces() if x.attributes['name'] == 'wlan1'),
+            None
+        )
+        self.assertEqual(wlan1.attributes['unknown']['wpa-ssid'], '"Home WIFI"')
+        self.assertEqual(wlan1.attributes['unknown']['wpa-psk'], 'ipassw')

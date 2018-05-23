@@ -19,7 +19,7 @@ iface wlan0 inet static
 #auto wlan1
 iface wlan1 inet dhcp
    hwaddress ether 02:1b:b1:ef:b0:01
-   wpa-ssid SSID
+   wpa-ssid "Home WIFI"
    wpa-psk ipassw
 
 #auto eth0
