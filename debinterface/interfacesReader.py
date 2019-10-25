@@ -71,6 +71,9 @@ class InterfacesReader(object):
                     self._read_auto(line)
                     self._read_hotplug(line)
 
+        # strip final newline character.
+        self._header_comments = self._header_comments.strip("\n")
+
     def _parse_iface(self, line):
         if line.startswith('iface'):
             sline = line.split()

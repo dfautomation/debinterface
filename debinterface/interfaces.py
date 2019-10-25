@@ -34,7 +34,7 @@ class Interfaces(object):
             self.updateAdapters()
         else:
             self._adapters = []
-        self._header_comment = header_comment
+            self._header_comment = header_comment
 
     @property
     def adapters(self):
@@ -58,6 +58,7 @@ class Interfaces(object):
         self._adapters = reader.parse_interfaces()
         if not self._adapters:
             self._adapters = []
+        self._header_comment = reader.header_comments
 
     def writeInterfaces(self):
         """ write adapters to interfaces file """
